@@ -1,0 +1,17 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+   # build image using dev docker file in client folder context
+  - docker build -t bryan/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  # test case will exit with a status of 0 or 1
+  - docker run -e CI=true bryan/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t bryan/multi-client ./client
+  - docker build -t bryan/multi-nginx ./nginx
+  - docker build -t bryan/multi-server ./server
+  - docker build -t bryan/multi-worker ./worker
