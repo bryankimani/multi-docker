@@ -4,23 +4,23 @@ services:
 
 before_install:
    # build image using dev docker file in client folder context
-  - docker build -t bryan/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t brnkimani/react-test -f ./client/Dockerfile.dev ./client
 
 script:
   # test case will exit with a status of 0 or 1
-  - docker run -e CI=true bryan/react-test npm test -- --coverage
+  - docker run -e CI=true brnkimani/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t bryan/multi-client ./client
-  - docker build -t bryan/multi-nginx ./nginx
-  - docker build -t bryan/multi-server ./server
-  - docker build -t bryan/multi-worker ./worker
+  - docker build -t brnkimani/multi-client ./client
+  - docker build -t brnkimani/multi-nginx ./nginx
+  - docker build -t brnkimani/multi-server ./server
+  - docker build -t brnkimani/multi-worker ./worker
 
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   # Take those images and push them to the docker hub
-  - docker push bryan/multi-client
-  - docker push bryan/multi-nginx
-  - docker push bryan/multi-server
-  - docker push bryan/multi-worker
+  - docker push brnkimani/multi-client
+  - docker push brnkimani/multi-nginx
+  - docker push brnkimani/multi-server
+  - docker push brnkimani/multi-worker
