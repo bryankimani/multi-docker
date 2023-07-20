@@ -15,3 +15,12 @@ after_success:
   - docker build -t bryan/multi-nginx ./nginx
   - docker build -t bryan/multi-server ./server
   - docker build -t bryan/multi-worker ./worker
+
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  # Take those images and push them to the docker hub
+  - docker push bryan/multi-client
+  - docker push bryan/multi-nginx
+  - docker push bryan/multi-server
+  - docker push bryan/multi-worker
