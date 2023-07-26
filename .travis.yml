@@ -24,3 +24,15 @@ after_success:
   - docker push brnkimani/multi-nginx
   - docker push brnkimani/multi-server
   - docker push brnkimani/multi-worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: 'us-west-1'
+  app: 'multi-docker'
+  env: 'Multi-docker-env'
+  bucket_name: 'elasticbeanstalk-eu-west-1-430307034846'
+  bucket_path: 'docket-multi'
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
